@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Immigration paperwork completed in minutes, not months. Attorney-reviewed. A fraction of lawyer costs.">
+<title>MyHomeFile — Your Path to Citizenship</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --navy: #0f2744;
+    --navy-light: #1a3a60;
+    --warm: #c8773a;
+    --warm-light: #fef3ea;
+    --cream: #faf7f2;
+    --green: #2d6a4f;
+    --green-light: #e8f5ee;
+    --green-border: #b7dfc8;
+    --text: #1a1a1a;
+    --muted: #6b7280;
+    --border: #e5e0d8;
+    --white: #ffffff;
+    --red-light: #fff0f0;
+    --red-border: #fcc;
+    --red: #c0392b;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 2rem;
+    background: var(--cream);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+  }
+
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: -0.5px;
+    text-decoration: none;
+  }
+
+  .logo span { color: var(--warm); }
+
+  .nav-right { display: flex; align-items: center; gap: 1rem; }
+
+  .nav-lang {
+    font-size: 0.85rem;
+    color: var(--muted);
+    cursor: pointer;
+    border: 1px solid var(--border);
+    padding: 0.4rem 0.9rem;
+    border-radius: 20px;
+    background: var(--white);
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .nav-lang:hover { border-color: var(--warm); color: var(--warm); }
+
+  .nav-cta {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--white);
+    background: var(--navy);
+    border: none;
+    padding: 0.5rem 1.1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.2s;
+    text-decoration: none;
+  }
+
+  .nav-cta:hover { background: var(--navy-light); }
+
+  /* HERO */
+  .hero {
+    padding: 5rem 2rem 4rem;
+    max-width: 780px;
+    margin: 0 auto;
+    text-align: center;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--green-light);
+    color: var(--green);
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    margin-bottom: 2rem;
+    border: 1px solid var(--green-border);
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    background: var(--green);
+    border-radius: 50%;
+    display: inline-block;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--navy);
+    margin-bottom: 1.5rem;
+    letter-spacing: -1px;
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--warm);
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 560px;
+    margin: 0 auto 2.5rem;
+  }
+
+  /* PRICE COMPARE */
+  .price-compare {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .price-box {
+    text-align: center;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    min-width: 140px;
+  }
+
+  .price-box.lawyer {
+    background: var(--red-light);
+    border: 1px solid var(--red-border);
+  }
+
+  .price-box.ours {
+    background: var(--green-light);
+    border: 2px solid var(--green);
+    transform: scale(1.05);
+  }
+
+  .price-label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.4rem;
+  }
+
+  .price-box.lawyer .price-label { color: var(--red); }
+  .price-box.ours .price-label { color: var(--green); }
+
+  .price-amount {
+    font-family: 'Fraunces', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .price-box.lawyer .price-amount {
+    color: var(--red);
+    text-decoration: line-through;
+    opacity: 0.7;
+  }
+
+  .price-box.ours .price-amount { color: var(--navy); }
+
+  .price-desc {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 0.3rem;
+  }
+
+  .price-arrow { font-size: 1.5rem; color: var(--muted); }
+
+  /* FORM */
+  .signup-form {
+    display: flex;
+    gap: 0.75rem;
+    max-width: 480px;
+    margin: 0 auto 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .signup-form input[type="email"] {
+    flex: 1;
+    min-width: 220px;
+    padding: 0.9rem 1.25rem;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .signup-form input[type="email"]:focus { border-color: var(--warm); }
+  .signup-form input[type="email"]::placeholder { color: #bbb; }
+
+  .btn-primary {
+    padding: 0.9rem 1.75rem;
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .btn-primary:hover { background: var(--navy-light); transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); }
+
+  .form-note { font-size: 0.8rem; color: var(--muted); margin-bottom: 3rem; }
+
+  .success-msg {
+    display: none;
+    background: var(--green-light);
+    border: 1px solid var(--green-border);
+    color: var(--green);
+    padding: 0.9rem 1.5rem;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    max-width: 480px;
+    margin: 0 auto 1rem;
+    font-weight: 500;
+  }
+
+  /* DIVIDER */
+  .divider {
+    width: 60px;
+    height: 3px;
+    background: var(--warm);
+    margin: 0 auto 4rem;
+    border-radius: 2px;
+  }
+
+  /* SECTIONS */
+  .section {
+    padding: 0 2rem 5rem;
+    max-width: 880px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--warm);
+    margin-bottom: 0.6rem;
+  }
+
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 700;
+    color: var(--navy);
+    text-align: center;
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.5px;
+  }
+
+  .section-sub {
+    text-align: center;
+    color: var(--muted);
+    font-size: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  /* STEPS */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .step {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.75rem;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+
+  .step:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.08); transform: translateY(-2px); }
+
+  .step-num {
+    width: 36px;
+    height: 36px;
+    background: var(--navy);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .step h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.5rem;
+  }
+
+  .step p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+
+  .step-time {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--warm);
+    background: var(--warm-light);
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+  }
+
+  /* TRUST */
+  .trust-section {
+    background: var(--navy);
+    padding: 4.5rem 2rem;
+    text-align: center;
+  }
+
+  .trust-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+    color: var(--white);
+    margin-bottom: 2.5rem;
+    font-weight: 600;
+  }
+
+  .trust-grid {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem 2.5rem;
+    flex-wrap: wrap;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .trust-item {
+    color: rgba(255,255,255,0.85);
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .trust-check {
+    width: 22px;
+    height: 22px;
+    background: var(--warm);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 11px;
+    color: var(--white);
+    font-weight: 700;
+  }
+
+  /* VISA TYPES */
+  .visa-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 1rem;
+  }
+
+  .visa-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem;
+    text-align: center;
+    transition: all 0.2s;
+    cursor: default;
+  }
+
+  .visa-card:hover {
+    border-color: var(--warm);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+
+  .visa-icon { font-size: 1.8rem; margin-bottom: 0.6rem; }
+
+  .visa-name {
+    font-family: 'Fraunces', serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.35rem;
+    line-height: 1.3;
+  }
+
+  .visa-price { font-size: 0.85rem; color: var(--green); font-weight: 600; }
+  .visa-old { font-size: 0.75rem; color: var(--muted); text-decoration: line-through; margin-left: 4px; }
+
+  /* COMPARISON */
+  .comparison-section {
+    background: var(--white);
+    padding: 5rem 2rem;
+  }
+
+  .comparison-inner { max-width: 880px; margin: 0 auto; }
+
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    margin-top: 2rem;
+  }
+
+  .comp-table th {
+    padding: 0.75rem 1rem;
+    text-align: center;
+    font-size: 0.72rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    border-bottom: 2px solid var(--border);
+  }
+
+  .comp-table th:first-child { text-align: left; }
+  .comp-table th.ours-col { color: var(--green); background: var(--green-light); border-radius: 8px 8px 0 0; }
+
+  .comp-table td {
+    padding: 0.9rem 1rem;
+    border-bottom: 0.5px solid var(--border);
+    text-align: center;
+    color: var(--text);
+  }
+
+  .comp-table td:first-child { text-align: left; }
+  .comp-table td.ours-col { background: var(--green-light); font-weight: 700; color: var(--green); }
+
+  .svc-name { font-weight: 500; color: var(--navy); }
+  .svc-note { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+  .price-lawyer { color: var(--red); font-weight: 500; }
+  .price-comp { color: #c07a1e; font-weight: 500; }
+  .price-diy { color: var(--muted); font-style: italic; }
+  .savings-amt { color: var(--green); font-weight: 700; }
+
+  .total-row td {
+    border-top: 2px solid var(--border);
+    border-bottom: none;
+    font-weight: 700;
+    padding-top: 1.1rem;
+  }
+
+  .comp-note {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 1.25rem;
+    line-height: 1.6;
+  }
+
+  /* CTA BOTTOM */
+  .cta-section {
+    padding: 5rem 2rem;
+    text-align: center;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
+  .cta-section h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: var(--navy);
+    margin-bottom: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+
+  .cta-section p { color: var(--muted); font-size: 1.05rem; margin-bottom: 2rem; line-height: 1.6; }
+
+  /* SPANISH BAR */
+  .spanish-bar {
+    text-align: center;
+    padding: 1rem 2rem;
+    background: var(--navy);
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.8);
+  }
+
+  .spanish-bar strong { color: var(--white); }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 1.5rem 2rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    line-height: 1.7;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    nav { padding: 1rem 1rem; }
+    .hero { padding: 3rem 1rem 2rem; }
+    .section { padding: 0 1rem 3rem; }
+    .price-box.ours { transform: scale(1); }
+    .comp-table { font-size: 0.78rem; }
+    .comp-table th, .comp-table td { padding: 0.6rem 0.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#">my<span>home</span>file</a>
+  <div class="nav-right">
+    <button class="nav-lang" onclick="alert('Versión en español próximamente!')">🇺🇸 EN / 🇲🇽 ES</button>
+    <a class="nav-cta" href="#signup">Get Early Access</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">Attorney-reviewed every single application</div>
+
+  <h1>Becoming a citizen<br>shouldn't cost a <em>fortune.</em></h1>
+
+  <p class="hero-sub">
+    Answer a few simple questions in plain English. Our AI fills out all your government paperwork correctly. A licensed attorney reviews everything. Done — for a fraction of what a lawyer charges.
+  </p>
+
+  <div class="price-compare">
+    <div class="price-box lawyer">
+      <div class="price-label">Immigration Lawyer</div>
+      <div class="price-amount">$3,500</div>
+      <div class="price-desc">Average attorney fee</div>
+    </div>
+    <div class="price-arrow">→</div>
+    <div class="price-box ours">
+      <div class="price-label">MyHomeFile</div>
+      <div class="price-amount">$599</div>
+      <div class="price-desc">Everything included</div>
+    </div>
+  </div>
+
+  <div id="signup">
+    <form class="signup-form" onsubmit="handleSignup(event)">
+      <input type="email" id="emailInput" placeholder="Enter your email address" required />
+      <button type="submit" class="btn-primary">Get Early Access</button>
+    </form>
+    <div class="success-msg" id="successMsg">
+      You're on the list! We'll reach out soon. Welcome to MyHomeFile.
+    </div>
+    <p class="form-note">No credit card needed &nbsp;·&nbsp; No commitment &nbsp;·&nbsp; We'll contact you when we launch</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOW IT WORKS -->
+<section class="section">
+  <div class="section-label">How it works</div>
+  <h2 class="section-title">Three steps. That's it.</h2>
+  <p class="section-sub">No confusing legal forms. No waiting rooms. No surprise fees.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Answer simple questions</h3>
+      <p>We ask everything in plain English — like a knowledgeable friend walking you through it. No legal jargon, ever.</p>
+      <span class="step-time">About 20 minutes</span>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>We handle all the paperwork</h3>
+      <p>Our AI fills out every government form correctly based on your answers. All pages, all fields, all supporting documents organized.</p>
+      <span class="step-time">Instant</span>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Attorney reviews & you file</h3>
+      <p>A licensed immigration attorney checks your complete application. Then you get everything packaged and ready to submit.</p>
+      <span class="step-time">Within 48 hours</span>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="trust-section">
+  <h2 class="trust-title">You deserve someone in your corner.</h2>
+  <div class="trust-grid">
+    <div class="trust-item"><div class="trust-check">✓</div>Licensed attorney review on every case</div>
+    <div class="trust-item"><div class="trust-check">✓</div>Available in English and Spanish</div>
+    <div class="trust-item"><div class="trust-check">✓</div>Flat fee — no hidden costs ever</div>
+    <div class="trust-item"><div class="trust-check">✓</div>Your documents stay private & secure</div>
+    <div class="trust-item"><div class="trust-check">✓</div>Support 7 days a week</div>
+    <div class="trust-item"><div class="trust-check">✓</div>Money-back if you don't qualify</div>
+  </div>
+</section>
+
+<!-- VISA TYPES -->
+<section class="section" style="padding-top: 5rem;">
+  <div class="section-label">What we handle</div>
+  <h2 class="section-title">Every major immigration path</h2>
+  <p class="section-sub">Starting with the most common — more coming soon.</p>
+
+  <div class="visa-grid">
+    <div class="visa-card">
+      <div class="visa-icon">💍</div>
+      <div class="visa-name">Marriage Green Card</div>
+      <div class="visa-price">$599 <span class="visa-old">$3,500+</span></div>
+    </div>
+    <div class="visa-card">
+      <div class="visa-icon">🗽</div>
+      <div class="visa-name">Citizenship &amp; Naturalization</div>
+      <div class="visa-price">$199 <span class="visa-old">$2,000+</span></div>
+    </div>
+    <div class="visa-card">
+      <div class="visa-icon">👨‍👩‍👧</div>
+      <div class="visa-name">Family Petition</div>
+      <div class="visa-price">$399 <span class="visa-old">$3,000+</span></div>
+    </div>
+    <div class="visa-card">
+      <div class="visa-icon">💼</div>
+      <div class="visa-name">Work Visa</div>
+      <div class="visa-price">$499 <span class="visa-old">$4,000+</span></div>
+    </div>
+    <div class="visa-card">
+      <div class="visa-icon">🔄</div>
+      <div class="visa-name">Green Card Renewal</div>
+      <div class="visa-price">$149 <span class="visa-old">$1,500+</span></div>
+    </div>
+    <div class="visa-card">
+      <div class="visa-icon">⚡</div>
+      <div class="visa-name">More coming soon</div>
+      <div class="visa-price" style="color: var(--muted);">Join waitlist</div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section class="comparison-section">
+  <div class="comparison-inner">
+    <div class="section-label" style="text-align:center;">The numbers don't lie</div>
+    <h2 class="section-title">See what you actually save</h2>
+    <p class="section-sub">Compared to lawyers, competitors, and going it alone</p>
+
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Service</th>
+          <th>Immigration Lawyer</th>
+          <th>Boundless</th>
+          <th>DIY (yourself)</th>
+          <th class="ours-col">MyHomeFile</th>
+          <th>You save</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="svc-name">Marriage Green Card</div><div class="svc-note">Most common path</div></td>
+          <td><span class="price-lawyer">$3,500–$6,000</span></td>
+          <td><span class="price-comp">$995</span></td>
+          <td><span class="price-diy">$0 + risk of denial</span></td>
+          <td class="ours-col">$599</td>
+          <td><span class="savings-amt">Up to $5,400</span></td>
+        </tr>
+        <tr>
+          <td><div class="svc-name">Citizenship</div><div class="svc-note">Final step to American</div></td>
+          <td><span class="price-lawyer">$1,500–$3,000</span></td>
+          <td><span class="price-comp">$499</span></td>
+          <td><span class="price-diy">$0 + risk of denial</span></td>
+          <td class="ours-col">$199</td>
+          <td><span class="savings-amt">Up to $2,800</span></td>
+        </tr>
+        <tr>
+          <td><div class="svc-name">Family Petition</div><div class="svc-note">Bring your family over</div></td>
+          <td><span class="price-lawyer">$2,000–$4,000</span></td>
+          <td><span class="price-comp">$795</span></td>
+          <td><span class="price-diy">$0 + risk of denial</span></td>
+          <td class="ours-col">$399</td>
+          <td><span class="savings-amt">Up to $3,600</span></td>
+        </tr>
+        <tr>
+          <td><div class="svc-name">Work Visa</div><div class="svc-note">Legal right to work</div></td>
+          <td><span class="price-lawyer">$2,500–$5,000</span></td>
+          <td><span class="price-comp">$895</span></td>
+          <td><span class="price-diy">$0 + risk of denial</span></td>
+          <td class="ours-col">$499</td>
+          <td><span class="savings-amt">Up to $4,500</span></td>
+        </tr>
+        <tr>
+          <td><div class="svc-name">Green Card Renewal</div><div class="svc-note">Keep your residency</div></td>
+          <td><span class="price-lawyer">$800–$1,500</span></td>
+          <td><span class="price-comp">$349</span></td>
+          <td><span class="price-diy">$0 + risk of denial</span></td>
+          <td class="ours-col">$149</td>
+          <td><span class="savings-amt">Up to $1,350</span></td>
+        </tr>
+        <tr class="total-row">
+          <td>All 5 services</td>
+          <td><span class="price-lawyer">Up to $19,500</span></td>
+          <td><span class="price-comp">$3,533</span></td>
+          <td><span class="price-diy">High risk</span></td>
+          <td class="ours-col">$1,845</td>
+          <td><span class="savings-amt">Up to $17,655</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="comp-note">* Government USCIS filing fees are separate and required regardless of which service you use — typically $500–$2,000 depending on application type. Lawyer fees based on 2026 market averages. Boundless pricing from boundless.com. DIY carries an estimated 30% error rate leading to delays or denials.</p>
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<section class="cta-section">
+  <h2>Your family's future starts here.</h2>
+  <p>Join families who are done overpaying lawyers and done being lost in the system. We handle the paperwork. You focus on your life.</p>
+  <form class="signup-form" onsubmit="handleSignup2(event)">
+    <input type="email" id="emailInput2" placeholder="Enter your email" required />
+    <button type="submit" class="btn-primary">Get Early Access</button>
+  </form>
+  <p class="form-note">Free to join &nbsp;·&nbsp; No commitment &nbsp;·&nbsp; No spam ever</p>
+</section>
+
+<!-- SPANISH BAR -->
+<div class="spanish-bar">
+  <strong>¿Hablas español?</strong> &nbsp;Estamos aquí para ayudarte. Todo disponible en español. &nbsp;·&nbsp; We speak your language.
+</div>
+
+<!-- FOOTER -->
+<footer>
+  © 2026 MyHomeFile.org &nbsp;·&nbsp; All applications reviewed by licensed immigration attorneys &nbsp;·&nbsp; MyHomeFile is not a law firm<br>
+  Questions? <a href="mailto:cmcgrat3@gmail.com" style="color: var(--warm);">Contact us</a>
+</footer>
+
+<script>
+  function handleSignup(e) {
+    e.preventDefault();
+    const email = document.getElementById('emailInput').value;
+    if (!email) return;
+
+    fetch('https://formspree.io/f/YOUR_FORM_ID', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, source: 'hero' })
+    }).catch(() => {});
+
+    document.querySelector('#signup .signup-form').style.display = 'none';
+    document.querySelector('#signup .form-note').style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+  }
+
+  function handleSignup2(e) {
+    e.preventDefault();
+    const email = document.getElementById('emailInput2').value;
+    if (!email) return;
+
+    fetch('https://formspree.io/f/YOUR_FORM_ID', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, source: 'bottom' })
+    }).catch(() => {});
+
+    e.target.innerHTML = '<div style="color:#2d6a4f;font-weight:500;padding:1rem;">You\'re on the list! Welcome to MyHomeFile. ✓</div>';
+  }
+</script>
+
+</body>
+</html>
