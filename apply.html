@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Start Your Application — MyHomeFile</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --navy: #0f2744;
+    --navy-light: #1a3a60;
+    --warm: #c8773a;
+    --warm-light: #fef3ea;
+    --cream: #faf7f2;
+    --green: #2d6a4f;
+    --green-light: #e8f5ee;
+    --green-border: #b7dfc8;
+    --text: #1a1a1a;
+    --muted: #6b7280;
+    --border: #e5e0d8;
+    --white: #ffffff;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+
+  /* NAV */
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 2rem; background: var(--white); border-bottom: 1px solid var(--border); }
+  .logo { font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 700; color: var(--navy); text-decoration: none; }
+  .logo span { color: var(--warm); }
+  .nav-secure { font-size: 0.8rem; color: var(--green); display: flex; align-items: center; gap: 6px; }
+  .nav-secure::before { content: '🔒'; font-size: 0.85rem; }
+
+  /* PROGRESS */
+  .progress-wrap { background: var(--white); border-bottom: 1px solid var(--border); padding: 1rem 2rem; }
+  .progress-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; }
+  .progress-label { font-size: 0.8rem; color: var(--muted); }
+  .progress-step { font-size: 0.8rem; font-weight: 500; color: var(--navy); }
+  .progress-bar-bg { background: var(--border); border-radius: 10px; height: 6px; width: 100%; }
+  .progress-bar-fill { background: var(--warm); border-radius: 10px; height: 6px; transition: width 0.4s ease; }
+
+  /* MAIN */
+  .main { max-width: 640px; margin: 0 auto; padding: 3rem 2rem 6rem; }
+
+  /* STEP */
+  .step-card { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 2.5rem; box-shadow: 0 4px 24px rgba(0,0,0,0.05); animation: fadeUp 0.35s ease both; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+  .step-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .step-eyebrow { font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; color: var(--warm); margin-bottom: 0.5rem; }
+  .step-question { font-family: 'Fraunces', serif; font-size: clamp(1.3rem, 3vw, 1.8rem); font-weight: 700; color: var(--navy); line-height: 1.3; margin-bottom: 0.6rem; }
+  .step-hint { font-size: 0.88rem; color: var(--muted); margin-bottom: 2rem; line-height: 1.6; }
+
+  /* OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem; }
+  .option-btn {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    color: var(--text);
+    width: 100%;
+  }
+  .option-btn:hover { border-color: var(--warm); background: var(--warm-light); }
+  .option-btn.selected { border-color: var(--navy); background: #eef3f9; }
+  .option-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .option-text { flex: 1; }
+  .option-title { font-weight: 500; color: var(--navy); }
+  .option-sub { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+
+  /* INPUTS */
+  .input-group { margin-bottom: 1.25rem; }
+  .input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  label { display: block; font-size: 0.82rem; font-weight: 500; color: var(--navy); margin-bottom: 0.4rem; }
+  input[type="text"], input[type="date"], input[type="email"], select {
+    width: 100%; padding: 0.85rem 1rem;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+  input:focus, select:focus { border-color: var(--warm); }
+  input::placeholder { color: #bbb; }
+
+  /* NAVIGATION */
+  .step-nav { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+  .btn-back { padding: 0.85rem 1.5rem; background: transparent; color: var(--muted); border: 1.5px solid var(--border); border-radius: 10px; font-size: 0.95rem; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.2s; }
+  .btn-back:hover { border-color: var(--navy); color: var(--navy); }
+  .btn-next { flex: 1; padding: 0.85rem 1.5rem; background: var(--navy); color: var(--white); border: none; border-radius: 10px; font-size: 1rem; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.2s; }
+  .btn-next:hover { background: var(--navy-light); transform: translateY(-1px); }
+  .btn-next:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; transform: none; }
+
+  /* REASSURANCE */
+  .reassurance { display: flex; align-items: flex-start; gap: 0.6rem; background: var(--green-light); border: 1px solid var(--green-border); border-radius: 10px; padding: 0.9rem 1rem; margin-top: 1.25rem; }
+  .reassurance-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+  .reassurance p { font-size: 0.82rem; color: var(--green); line-height: 1.5; }
+
+  /* CHECKLIST / SUMMARY */
+  .checklist-section { margin-bottom: 2rem; }
+  .checklist-title { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 600; color: var(--navy); margin-bottom: 1rem; }
+  .checklist-item { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.85rem 1rem; background: var(--cream); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 0.5rem; }
+  .checklist-num { width: 24px; height: 24px; background: var(--navy); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .checklist-text { flex: 1; }
+  .checklist-name { font-size: 0.9rem; font-weight: 500; color: var(--navy); }
+  .checklist-desc { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+
+  .summary-box { background: var(--green-light); border: 1px solid var(--green-border); border-radius: 14px; padding: 1.5rem; margin-bottom: 1.5rem; }
+  .summary-title { font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 600; color: var(--green); margin-bottom: 1rem; }
+  .summary-row { display: flex; justify-content: space-between; font-size: 0.88rem; margin-bottom: 0.5rem; }
+  .summary-label { color: var(--muted); }
+  .summary-value { font-weight: 500; color: var(--navy); }
+  .summary-price { display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 700; color: var(--navy); border-top: 1px solid var(--green-border); padding-top: 0.75rem; margin-top: 0.75rem; }
+
+  /* TRUST BAR */
+  .trust-bar { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+  .trust-item { font-size: 0.78rem; color: var(--muted); display: flex; align-items: center; gap: 5px; }
+
+  /* SUCCESS */
+  .success-card { text-align: center; padding: 2rem; }
+  .success-icon { font-size: 4rem; margin-bottom: 1rem; }
+  .success-title { font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 700; color: var(--navy); margin-bottom: 0.75rem; }
+  .success-sub { color: var(--muted); font-size: 1rem; line-height: 1.7; margin-bottom: 2rem; }
+  .next-steps { text-align: left; }
+  .next-step { display: flex; gap: 0.75rem; margin-bottom: 1rem; align-items: flex-start; }
+  .next-step-num { width: 28px; height: 28px; background: var(--warm); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; }
+  .next-step-text { font-size: 0.9rem; color: var(--text); line-height: 1.5; padding-top: 3px; }
+
+  @media (max-width: 500px) {
+    .main { padding: 1.5rem 1rem 4rem; }
+    .step-card { padding: 1.5rem; }
+    .input-row { grid-template-columns: 1fr; }
+    nav { padding: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="index.html">my<span>home</span>file</a>
+  <div class="nav-secure">Secure & Encrypted</div>
+</nav>
+
+<div class="progress-wrap">
+  <div class="progress-top">
+    <span class="progress-label" id="progressLabel">Getting started</span>
+    <span class="progress-step" id="progressStep">Step 1 of 7</span>
+  </div>
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill" style="width: 14%"></div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="step-card" id="stepCard"></div>
+</div>
+
+<script>
+const answers = {};
+let currentStep = 0;
+
+const steps = [
+  {
+    id: 'visa_type',
+    icon: '🗂️',
+    eyebrow: 'Let\'s get started',
+    question: 'What do you need help with today?',
+    hint: 'Choose the option that best describes your situation. Don\'t worry — you can change this later.',
+    type: 'options',
+    options: [
+      { value: 'marriage_green_card', icon: '💍', title: 'Marriage Green Card', sub: 'My spouse is a US citizen or permanent resident' },
+      { value: 'citizenship', icon: '🗽', title: 'Citizenship / Naturalization', sub: 'I\'ve been a permanent resident and want to become a citizen' },
+      { value: 'family_petition', icon: '👨‍👩‍👧', title: 'Family Petition', sub: 'I want to bring a family member to the US' },
+      { value: 'work_visa', icon: '💼', title: 'Work Visa', sub: 'I need legal authorization to work in the US' },
+      { value: 'green_card_renewal', icon: '🔄', title: 'Green Card Renewal', sub: 'My green card is expiring and needs to be renewed' },
+    ],
+    label: 'Select your immigration need',
+    progressLabel: 'Getting started',
+  },
+  {
+    id: 'petitioner_name',
+    icon: '👤',
+    eyebrow: 'About the US Citizen / Petitioner',
+    question: 'What is the full legal name of the US Citizen?',
+    hint: 'This is the person filing on behalf of their spouse. Enter the name exactly as it appears on their ID.',
+    type: 'name',
+    progressLabel: 'Petitioner info',
+  },
+  {
+    id: 'petitioner_dob',
+    icon: '📅',
+    eyebrow: 'About the US Citizen / Petitioner',
+    question: 'What is their date of birth and country of birth?',
+    hint: 'We need this to complete Form I-130 accurately.',
+    type: 'dob_country',
+    progressLabel: 'Petitioner info',
+  },
+  {
+    id: 'beneficiary_name',
+    icon: '🌟',
+    eyebrow: 'About the Immigrant Spouse',
+    question: 'What is the full legal name of the immigrant spouse?',
+    hint: 'This is the person who will receive the green card. Use their name exactly as it appears on their passport.',
+    type: 'name',
+    progressLabel: 'Spouse info',
+  },
+  {
+    id: 'beneficiary_details',
+    icon: '🌍',
+    eyebrow: 'About the Immigrant Spouse',
+    question: 'Where is the immigrant spouse currently located?',
+    hint: 'This determines which forms we file and how the process works for your situation.',
+    type: 'options',
+    options: [
+      { value: 'inside_us', icon: '🏠', title: 'Inside the United States', sub: 'We will file for Adjustment of Status (I-485)' },
+      { value: 'outside_us', icon: '✈️', title: 'Outside the United States', sub: 'We will file for Consular Processing' },
+    ],
+    progressLabel: 'Spouse info',
+  },
+  {
+    id: 'marriage_details',
+    icon: '💑',
+    eyebrow: 'Marriage Information',
+    question: 'Tell us about your marriage',
+    hint: 'We need these details for the marriage petition. All information is kept completely private and secure.',
+    type: 'marriage',
+    progressLabel: 'Marriage details',
+  },
+  {
+    id: 'contact',
+    icon: '📬',
+    eyebrow: 'Almost done!',
+    question: 'Where should we send your document checklist and next steps?',
+    hint: 'We\'ll email you a personalized document checklist, your completed forms, and instructions — all reviewed by a licensed immigration attorney.',
+    type: 'contact',
+    progressLabel: 'Contact info',
+  },
+];
+
+function render() {
+  const step = steps[currentStep];
+  const pct = Math.round(((currentStep + 1) / (steps.length + 1)) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = step.progressLabel;
+  document.getElementById('progressStep').textContent = 'Step ' + (currentStep + 1) + ' of ' + steps.length;
+
+  let html = '';
+
+  if (currentStep === steps.length) {
+    renderChecklist();
+    return;
+  }
+
+  html += '<div class="step-icon">' + step.icon + '</div>';
+  html += '<div class="step-eyebrow">' + step.eyebrow + '</div>';
+  html += '<div class="step-question">' + step.question + '</div>';
+  html += '<div class="step-hint">' + step.hint + '</div>';
+
+  if (step.type === 'options') {
+    html += '<div class="options">';
+    step.options.forEach(opt => {
+      const sel = answers[step.id] === opt.value ? ' selected' : '';
+      html += '<button class="option-btn' + sel + '" onclick="selectOption(\'' + step.id + '\',\'' + opt.value + '\')">';
+      html += '<span class="option-icon">' + opt.icon + '</span>';
+      html += '<span class="option-text"><div class="option-title">' + opt.title + '</div><div class="option-sub">' + opt.sub + '</div></span>';
+      html += '</button>';
+    });
+    html += '</div>';
+  }
+
+  if (step.type === 'name') {
+    const prefix = step.id === 'petitioner_name' ? 'pet_' : 'ben_';
+    html += '<div class="input-group"><div class="input-row">';
+    html += '<div><label>First Name</label><input type="text" id="' + prefix + 'first" placeholder="First name" value="' + (answers[prefix+'first']||'') + '" oninput="answers[\'' + prefix + 'first\']=this.value"></div>';
+    html += '<div><label>Last Name</label><input type="text" id="' + prefix + 'last" placeholder="Last name" value="' + (answers[prefix+'last']||'') + '" oninput="answers[\'' + prefix + 'last\']=this.value"></div>';
+    html += '</div></div>';
+    html += '<div class="input-group"><label>Middle Name <span style="color:var(--muted);font-weight:400;">(optional)</span></label>';
+    html += '<input type="text" id="' + prefix + 'middle" placeholder="Middle name" value="' + (answers[prefix+'middle']||'') + '" oninput="answers[\'' + prefix + 'middle\']=this.value"></div>';
+  }
+
+  if (step.type === 'dob_country') {
+    html += '<div class="input-group"><label>Date of Birth</label>';
+    html += '<input type="date" id="pet_dob" value="' + (answers['pet_dob']||'') + '" oninput="answers[\'pet_dob\']=this.value"></div>';
+    html += '<div class="input-group"><label>Country of Birth</label>';
+    html += '<input type="text" id="pet_country" placeholder="e.g. United States" value="' + (answers['pet_country']||'') + '" oninput="answers[\'pet_country\']=this.value"></div>';
+    html += '<div class="input-group"><label>Social Security Number</label>';
+    html += '<input type="text" id="pet_ssn" placeholder="XXX-XX-XXXX" value="' + (answers['pet_ssn']||'') + '" oninput="answers[\'pet_ssn\']=this.value"></div>';
+  }
+
+  if (step.type === 'marriage') {
+    html += '<div class="input-group"><label>Date of Marriage</label>';
+    html += '<input type="date" id="marriage_date" value="' + (answers['marriage_date']||'') + '" oninput="answers[\'marriage_date\']=this.value"></div>';
+    html += '<div class="input-group"><label>City & Country Where You Were Married</label>';
+    html += '<input type="text" id="marriage_place" placeholder="e.g. Mexico City, Mexico" value="' + (answers['marriage_place']||'') + '" oninput="answers[\'marriage_place\']=this.value"></div>';
+    html += '<div class="input-group"><label>Have either of you been married before?</label>';
+    html += '<select id="prev_marriage" onchange="answers[\'prev_marriage\']=this.value"><option value="">Select an option</option>';
+    html += '<option value="no"' + (answers['prev_marriage']==='no'?' selected':'') + '>No — this is our first marriage</option>';
+    html += '<option value="yes"' + (answers['prev_marriage']==='yes'?' selected':'') + '>Yes — one or both of us was previously married</option>';
+    html += '</select></div>';
+  }
+
+  if (step.type === 'contact') {
+    html += '<div class="input-group"><label>Your Email Address</label>';
+    html += '<input type="email" id="contact_email" placeholder="your@email.com" value="' + (answers['contact_email']||'') + '" oninput="answers[\'contact_email\']=this.value"></div>';
+    html += '<div class="input-group"><label>Your Phone Number</label>';
+    html += '<input type="text" id="contact_phone" placeholder="(555) 000-0000" value="' + (answers['contact_phone']||'') + '" oninput="answers[\'contact_phone\']=this.value"></div>';
+    html += '<div class="input-group"><label>Preferred Language</label>';
+    html += '<select id="contact_lang" onchange="answers[\'contact_lang\']=this.value"><option value="english"' + (answers['contact_lang']==='english'?' selected':'') + '>English</option>';
+    html += '<option value="spanish"' + (answers['contact_lang']==='spanish'?' selected':'') + '>Spanish / Español</option></select></div>';
+  }
+
+  // Reassurance messages
+  const reassurances = [
+    'No legal jargon — we translate everything into plain English for you.',
+    'Your information is encrypted and never shared with third parties.',
+    'All applications are reviewed by a licensed immigration attorney before filing.',
+    'You\'re almost halfway there — most people complete this in under 25 minutes.',
+    'Every answer you give is automatically saved as you go.',
+    'We\'ll generate your complete personalized document checklist in seconds.',
+    'You\'re about to get a complete action plan tailored to your exact situation.',
+  ];
+
+  html += '<div class="reassurance"><span class="reassurance-icon">✨</span><p>' + reassurances[currentStep] + '</p></div>';
+
+  html += '<div class="step-nav">';
+  if (currentStep > 0) html += '<button class="btn-back" onclick="goBack()">← Back</button>';
+  html += '<button class="btn-next" id="nextBtn" onclick="goNext()">Continue →</button>';
+  html += '</div>';
+
+  html += '<div class="trust-bar">';
+  html += '<span class="trust-item">🔒 SSL Encrypted</span>';
+  html += '<span class="trust-item">⚖️ Attorney Reviewed</span>';
+  html += '<span class="trust-item">🇺🇸 USCIS Compliant</span>';
+  html += '</div>';
+
+  document.getElementById('stepCard').innerHTML = html;
+  document.getElementById('stepCard').style.animation = 'none';
+  setTimeout(() => document.getElementById('stepCard').style.animation = '', 10);
+}
+
+function selectOption(stepId, value) {
+  answers[stepId] = value;
+  render();
+  setTimeout(goNext, 300);
+}
+
+function goNext() {
+  const step = steps[currentStep];
+  if (step.type === 'name') {
+    const prefix = step.id === 'petitioner_name' ? 'pet_' : 'ben_';
+    answers[prefix+'first'] = document.getElementById(prefix+'first')?.value || '';
+    answers[prefix+'last'] = document.getElementById(prefix+'last')?.value || '';
+    answers[prefix+'middle'] = document.getElementById(prefix+'middle')?.value || '';
+    if (!answers[prefix+'first'] || !answers[prefix+'last']) { alert('Please enter first and last name.'); return; }
+  }
+  if (step.type === 'dob_country') {
+    answers['pet_dob'] = document.getElementById('pet_dob')?.value || '';
+    answers['pet_country'] = document.getElementById('pet_country')?.value || '';
+    answers['pet_ssn'] = document.getElementById('pet_ssn')?.value || '';
+    if (!answers['pet_dob'] || !answers['pet_country']) { alert('Please fill in date of birth and country of birth.'); return; }
+  }
+  if (step.type === 'marriage') {
+    answers['marriage_date'] = document.getElementById('marriage_date')?.value || '';
+    answers['marriage_place'] = document.getElementById('marriage_place')?.value || '';
+    answers['prev_marriage'] = document.getElementById('prev_marriage')?.value || '';
+    if (!answers['marriage_date'] || !answers['marriage_place']) { alert('Please fill in your marriage date and location.'); return; }
+  }
+  if (step.type === 'contact') {
+    const emailEl = document.getElementById('contact_email');
+    const phoneEl = document.getElementById('contact_phone');
+    const langEl = document.getElementById('contact_lang');
+    if (emailEl) answers['contact_email'] = emailEl.value;
+    if (phoneEl) answers['contact_phone'] = phoneEl.value;
+    if (langEl) answers['contact_lang'] = langEl.value;
+    if (!answers['contact_email']) { alert('Please enter your email address.'); return; }
+  }
+  if (step.type === 'options' && !answers[step.id]) { alert('Please select an option to continue.'); return; }
+  currentStep++;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  render();
+}
+
+function goBack() {
+  if (currentStep > 0) { currentStep--; render(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+}
+
+function renderChecklist() {
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('progressLabel').textContent = 'Your personalized plan';
+  document.getElementById('progressStep').textContent = 'Complete ✓';
+
+  const petName = (answers['pet_first'] || answers['pet_first'] || 'Petitioner');
+  const benName = (answers['ben_first'] || 'Spouse');
+  const location = answers['beneficiary_details'];
+
+  const forms = [
+    { name: 'Form I-130', desc: 'Petition for Alien Relative — establishes the qualifying relationship' },
+    { name: 'Form I-130A', desc: 'Supplemental information for spouse beneficiary' },
+  ];
+
+  if (location === 'inside_us') {
+    forms.push({ name: 'Form I-485', desc: 'Application to Register Permanent Residence (Adjustment of Status)' });
+    forms.push({ name: 'Form I-765', desc: 'Application for Employment Authorization (work permit)' });
+    forms.push({ name: 'Form I-131', desc: 'Application for Travel Document (advance parole)' });
+    forms.push({ name: 'Form I-864', desc: 'Affidavit of Support — required financial sponsorship form' });
+  } else {
+    forms.push({ name: 'Form I-864', desc: 'Affidavit of Support — required financial sponsorship form' });
+  }
+
+  const docs = [
+    { name: 'Valid US Passport or Naturalization Certificate', desc: 'Proof of US citizenship for the petitioner' },
+    { name: 'Official Marriage Certificate', desc: 'With certified translation if not in English' },
+    { name: 'Passport Photos', desc: '2 photos each, meeting USCIS specifications' },
+    { name: 'Passport Copy (Immigrant Spouse)', desc: 'All pages of current passport' },
+    { name: 'Proof of Bona Fide Marriage', desc: 'Joint bank statements, lease, photos together, etc.' },
+    { name: 'Tax Returns (most recent 3 years)', desc: 'Required for the Affidavit of Support' },
+  ];
+
+  if (answers['prev_marriage'] === 'yes') {
+    docs.push({ name: 'Divorce Decree(s)', desc: 'Official documentation of all prior marriages ending' });
+  }
+
+  if (location === 'inside_us') {
+    docs.push({ name: 'Medical Examination (Form I-693)', desc: 'Must be completed by a USCIS-designated civil surgeon' });
+  }
+
+  let html = '<div class="success-card">';
+  html += '<div class="success-icon">🎉</div>';
+  html += '<div class="success-title">Your plan is ready!</div>';
+  html += '<div class="success-sub">We\'ve built a personalized document checklist and form list for your marriage green card application. A licensed immigration attorney will review everything before you file.</div>';
+  html += '</div>';
+
+  html += '<div class="summary-box">';
+  html += '<div class="summary-title">📋 Your Application Summary</div>';
+  html += '<div class="summary-row"><span class="summary-label">Application type</span><span class="summary-value">Marriage Green Card (I-130)</span></div>';
+  html += '<div class="summary-row"><span class="summary-label">Filing method</span><span class="summary-value">' + (location === 'inside_us' ? 'Adjustment of Status (inside US)' : 'Consular Processing (outside US)') + '</span></div>';
+  html += '<div class="summary-row"><span class="summary-label">Forms we\'ll complete</span><span class="summary-value">' + forms.length + ' USCIS forms</span></div>';
+  html += '<div class="summary-row"><span class="summary-label">Attorney review</span><span class="summary-value">✓ Included</span></div>';
+  html += '<div class="summary-row"><span class="summary-label">Estimated completion</span><span class="summary-value">Within 48 hours of documents received</span></div>';
+  html += '<div class="summary-price"><span>Your price</span><span>$599 <span style="font-size:0.8rem;color:var(--muted);text-decoration:line-through;margin-left:6px;">$3,500+</span></span></div>';
+  html += '</div>';
+
+  html += '<div class="checklist-section">';
+  html += '<div class="checklist-title">📄 Forms We\'ll Complete For You</div>';
+  forms.forEach((f, i) => {
+    html += '<div class="checklist-item"><div class="checklist-num">' + (i+1) + '</div><div class="checklist-text"><div class="checklist-name">' + f.name + '</div><div class="checklist-desc">' + f.desc + '</div></div></div>';
+  });
+  html += '</div>';
+
+  html += '<div class="checklist-section">';
+  html += '<div class="checklist-title">📁 Documents You\'ll Need to Gather</div>';
+  docs.forEach((d, i) => {
+    html += '<div class="checklist-item"><div class="checklist-num">' + (i+1) + '</div><div class="checklist-text"><div class="checklist-name">' + d.name + '</div><div class="checklist-desc">' + d.desc + '</div></div></div>';
+  });
+  html += '</div>';
+
+  html += '<div class="checklist-section">';
+  html += '<div class="checklist-title">🚀 What Happens Next</div>';
+  html += '<div class="next-steps">';
+  html += '<div class="next-step"><div class="next-step-num">1</div><div class="next-step-text"><strong>Complete your payment</strong> — $599 flat fee, no hidden costs. Attorney review included.</div></div>';
+  html += '<div class="next-step"><div class="next-step-num">2</div><div class="next-step-text"><strong>Upload your documents</strong> — We\'ll guide you through exactly what to send.</div></div>';
+  html += '<div class="next-step"><div class="next-step-num">3</div><div class="next-step-text"><strong>We prepare everything</strong> — AI fills all your forms. Attorney reviews within 48 hours.</div></div>';
+  html += '<div class="next-step"><div class="next-step-num">4</div><div class="next-step-text"><strong>You receive your complete package</strong> — Everything organized and ready to mail to USCIS.</div></div>';
+  html += '</div></div>';
+
+  html += '<button class="btn-next" onclick="handlePayment()" style="width:100%;padding:1.1rem;font-size:1.1rem;border-radius:14px;margin-top:1rem;">Start My Application — $599 →</button>';
+  html += '<p style="text-align:center;font-size:0.78rem;color:var(--muted);margin-top:0.75rem;">Money-back guarantee if you don\'t qualify &nbsp;·&nbsp; Attorney reviewed &nbsp;·&nbsp; Secure checkout</p>';
+
+  html += '<div class="trust-bar">';
+  html += '<span class="trust-item">🔒 SSL Encrypted</span>';
+  html += '<span class="trust-item">⚖️ Attorney Reviewed</span>';
+  html += '<span class="trust-item">💰 Money-back Guarantee</span>';
+  html += '</div>';
+
+  document.getElementById('stepCard').innerHTML = html;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function handlePayment() {
+  alert('Payment processing coming soon! We\'ll notify you at ' + (answers['contact_email'] || 'your email') + ' when we launch.');
+}
+
+render();
+</script>
+</body>
+</html>
